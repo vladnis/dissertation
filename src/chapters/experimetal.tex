@@ -5,6 +5,8 @@
 \section{Simulating a crowd sensing campaign}
 \label{sec:exp-crowd}
 
+\subsection{Use cases}
+
 In order to simulate a crowd sensing campaign, we require a set of characteristics for the campaign. A campaign can be characterized by the area of interest, the zone from which the data needs to be gathered, the range at which a sensor can measure data and the time the campaign is expected to take place.
 
 A WiFi sensor can detect hotspots at ranges of about 100m, according to the WiFi 802.11 standards\footnote{\url{http://standards.ieee.org/about/get/802/802.11.html}}. In contrast, an air quality sensor can take measurements of the air that directly touches it. For the later one we assume the measurements are relevant for a distance of 3m.
@@ -45,3 +47,62 @@ coveredPercentage = \frac{count_{coveredCells}}{count_{spaceOfInterestCells}} *1
 
 \section{Accelerometers}
 \label{sec:exp-acc}
+
+\subsection{Use case}
+
+In terms of use cases that can be taken into consideration, which can combine the power of crowd sensing with the low costs and popularity of accelerometers that are embeded in smartphones, there are a multitude of application that can be built. One example can be taking real time readings of the magnited of earth movement caused by earthquakes or other sources of vibration like subways. Another great application can be using accelerometers and crowd sensing to see where users are most likely to enage in phisical activities, so that this area can be further be incrised. Also, smartphones in cars could capture data associated with incidents and using crowd sensing, a map of the most dangerous areas can be made and different actions can be taken to reduce them.
+
+The use case proposed by us, wants to take advantage of the smartphones popularity and integration of inertial sensors to recognize gestures and diferentiate between normal walking and using an elevator or going up or down a stairway. This data gatherd from a large number of smartphones, through crowd sensing will result in a map of stairs and elevators, from which persons with disabilities could use when choosing a path to a destination.
+
+This use case would imply minimal effort in terms of capturing data. The smartphone should be able to identify by itself different context of movement, withouth user input. In terms of security data gathered can be anonimous, as it is important to have a general idea of locations of stairs and elevators, not only for one person.
+
+\subsection{Data acquizition}
+
+For data acquizition an Android application is built, which will help with capturing data from inertial sensors, that will be later used as training and testing datasets. In this phase user input is important, so that datasets are segmented and the segment includes only one event of the following:
+ \begin{itemize}
+\item stairs up - from the moment one leg leaves the ground, to the moment that the same leg touches the next step in the stairway
+\item stairs down - the same of above, only reversed
+\item elevator up - will contain only the first part when the elevator is starting to accelerate until it reaches a constant speed
+\item elevator down - the same as above, only the elevator is going down
+\item non relevant move - to test null rejection, which means that a gesture does not fit any of the above gestures. Can be a step in walkig, running or stanging stil
+\end{itemize}
+
+The first step in the data acquisition process will be, it is very important that the phone's orientaion should not give different readings. For this two methods are considered. One is using the acceleration magnitude form the equation \ref{eq:magnitude}, where x, y, z are the acceleration on the coordinates. Although this is a good method for general cases, in the usecase, provided the most movement is happening on the vertical axis, it would mean that the result would only add irelevant noise.
+
+\begin{equation}
+a = \sqrt{x^{2} + y^{2} + z^{2}}
+\label{eq:magnitude}
+\end{equation}
+
+A better solution is proposed by the Android framework and uses the reading from the gravity and magnetic sensors so that a rotation matrix is calculated, which can be used to transform a vector, more specifics the accelerations vector, from the device coordinate system to the world's coordinate system, as you can see in \ref{lst:coord}.
+
+\lstset{language=make,caption=Transforming to world's coordinate system,label=lst:coord}
+\begin{lstlisting}
+SensorManager.getRotationMatrix(R, I, gravityValues,
+magneticValues);
+android.opengl.Matrix.invertM(inv, 0, R, 0);
+android.opengl.Matrix.multiplyMV(earthAcc, 0, inv, 0,
+ linear_acceleration, 0);
+// liniar_acceleration matrix will be transofrmed to 
+// world's coordinate system
+\end{lstlisting}
+
+The second step is to isolate the force of gravity with the low-pass filter and remove the gravity contribution with the high-pass filter.
+
+Another step includes calibration which will be used for normalization of the data. For this reading will be taken in the following cases:
+\begin{itemize}
+\item phone set on screen, which will be associated with +1g
+\item phone set on back, which will be associated with -1g
+\item phone droped, for exeample from one hand to another, which will be associated with 0
+\end{itemize}
+
+Readings will be normalized so that diferent devices have similar readings using filters like 
+
+https://www.google.ro/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=android%20accelerometer%20normalize
+http://electronics.stackexchange.com/questions/195796/normalize-values-from-different-mems-3-axis-accelerometers
+
+\subsection{Gesture recognition}
+
+\subsection{Testing}
+
+
