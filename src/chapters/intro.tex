@@ -5,49 +5,46 @@
 \label{sec:intro-crowd}
 There is a need for up to date, detailed data on different metrics that characterize the environments we live in. A few examples are: air quality, noise pollution, traffic density and even WiFi access. This data is significant to environmental scientists, city managers and even citizens which can make better, informed, decisions. Data is the first step in enabling smart cities.
 
-Standard solutions for gathering environmental data on a large geographical scale are expensive and difficult to implement. Even community driven projects such as the Air~Quality~Egg\footnote{\url{http://airqualityegg.com/}} come at a high price and have moderate usage (in the order of thousands for the entire planet). A recent alternative that is growing in popularity is crowdsensing (Section \ref{sec:relatedwork}). Crowdsensing~\cite{riva2007urbanet} proposes the distribution of the data gathering task to a large number of people. Any person carrying a device capable of measuring a certain characteristic of the environment and transmitting this data to a central database can participate in a crowdsensing campaign.
+Standard solutions for gathering environmental data on a large geographical scale are expensive and difficult to implement. Even community driven projects such as the Air~Quality~Egg\footnote{\url{http://airqualityegg.com/}} come at a high price and have moderate usage (in the order of thousands for the entire planet). A recent alternative that is growing in popularity is crowdsensing (Section \ref{sec:related-crowd}). Crowdsensing~\cite{riva2007urbanet} proposes the distribution of the data gathering task to a large number of people. Any person carrying a device capable of measuring a certain characteristic of the environment and transmitting this data to a central database can participate in a crowdsensing campaign.
 
 Smartphones represent the most convenient tool for a crowd sensing campaign. First of all, smartphones are now ubiquitous, meaning the cost of deploying a crowdsensing campaign is lowered because most people already own the hardware needed for such a campaign. According to \cite{poushter2016smartphone}, in United States the penetration of smartphones has reach a percentage of 72\% and even in less developed countries the percentage of smartphone penetration is rising fast. They have a large variety of sensors, such as accelerometers, microphones and video cameras and can easily be extended with more through the use of Bluetooth. They have more and more powerful processors, which permit complex data processing, as well as clear methods of developing and deploying new applications that can run on a very large number of devices. Lastly all smartphones have WiFi and LTE modules which permit the transmission of the sensed data.
 
 For crowdsensing, to be effective, it still has to deal with a number of pitfalls. Crowdsensing campaigns require a significant number of participants in order to permit the extraction of valid conclusions (a.k.a., a critical mass of people is needed in order to validate the measurements). These campaigns are either volunteer-based or offer special incentives, such as monetary compensation \cite{ra2012medusa}. In either case, it is not clear how many participants are needed in order to have a successful crowdsensing campaign, where enough data is gathered to permit the organizers to draw valid conclusions. To our knowledge, there are no studies that offer a methodology for determining a threshold for an optimal number of participants of a crowdsensing campaign. The optimal number is the minimal number of participants for which enough data is gathered. The number of participants needs to be minimal in order to minimize resource usage and incentives costs.
 
-In this paper we propose a methodology for computing the optimal number of participants for a crowdsensing campaign depending on the campaign characteristics. Having this number is vital for the organizers of any campaign that uses crowdsensing techniques. First of all, it offers an idea of the possible success (as in, how representative is the measurement data to describe a particular environment) of the campaign. Secondly, a relation between the number of participants and the effectiveness of the measurement sensing campaign, can in fact help the organizers plan the use of incentives to either motivate participation, or keep the costs under control.
+In the first part of this study, we propose a methodology for computing the optimal number of participants for a crowdsensing campaign depending on the campaign characteristics. Having this number is vital for the organizers of any campaign that uses crowdsensing techniques. First of all, it offers an idea of the possible success (as in, how representative is the measurement data to describe a particular environment) of the campaign. Secondly, a relation between the number of participants and the effectiveness of the measurement sensing campaign, can in fact help the organizers plan the use of incentives to either motivate participation, or keep the costs under control.
 
 Determining an optimal number of participants in real life is difficult. Starting a crowd sensing application is currently based on the willingness of people to participate. It is unlikely and extremely time consuming to repeat the same crowdsensing campaign with varying number of participants.
 
 No trivial solutions for determining the optimal number of participants are available. An obvious one would be to divide the size of the area of interest, by the size of the sensing area of a single sensor. The solution is appropriate for static sensors. However, it does not take into account overlaps between multiple sensors or movements of the sensors, as they are carry around by people, during a time period. When we take movement into account a single sensor can cover a far larger area then it is expected from its specification.
 
-Our approach for determining the optimal number of participants is to simulate crowdsensing campaigns that take into account crowd movement (Section \ref{sec:simulation}). We choose an interest area, Herastrau park in Bucharest, and simulate crowdsensing campaigns for air quality, WiFi access as well as people density as crowd sensing applications (Section \ref{sec:results}).
+Our approach for determining the optimal number of participants is to simulate crowdsensing campaigns that take into account crowd movement (Section \ref{sec:exp-crowd}). We choose an interest area, Herastrau park in Bucharest, and simulate crowdsensing campaigns for air quality, WiFi access as well as people density as crowd sensing applications (Section \ref{sec:res-crowd}).
 
-We take a further look into the problem of the number of participants by offering a discussion on the number of possible candidates for a crowd sensing campaign. Possible candidates represent people for which taking part in the campaign is reasonable. To offer a clear example, it is wrong to assume that a crowd sensing campaign could have more participants than the number of citizens of the respective city the campaign takes place in (Section \ref{sec:discussion}).
+We take a further look into the problem of the number of participants by offering a discussion on the number of possible candidates for a crowd sensing campaign. Possible candidates represent people for which taking part in the campaign is reasonable. To offer a clear example, it is wrong to assume that a crowd sensing campaign could have more participants than the number of citizens of the respective city the campaign takes place in (Section \ref{sec:res-crowd-discution}).
 
 
 \section{Accelerometers}
 \label{sec:intro-acc}
-Inertial sensors are one of the most used components,
+Accelerometers are one of the most used components,
 because of the multitude of applications that can be build from
 inertial information, low costs and easy integration in different
 types of hardware, like mobile phones, robots, drones and
-many more. The role of an inertial sensor is to identfy phisical
+many more. An accelerometer is usualy integrated into an inertial system, which may also include gyroscops, magnetic sensors or gravitational sensors. 
+Additional sensors
+can be used as a referance, in order to minimize the accelerometer drift. 
+The role of an inertial sensor is to identfy phisical
 movement, which can be liniar displacement or rotation, and
 transform it to a readable set of analogical or digital data.
 
-An inertial sensor commonly uses one or more accelerometers
- and gyroscopes and ranges from low cost, MEMS inertial
+An inertial sensor commonly ranges from low cost, MEMS inertial
 sensors, measuring only a few square mm, that offer less
 precision, up to more precise and expensive sensors, like ring
 laser gyroscopes which can measure 50 cm in diameter. Most
-common types of sensors are MEMS ( Microelectromechani-
-cal ) inertaial sensors, which can be found in most smartphones,
+common types of sensors are MEMS ( Microelectromechanical ) inertaial sensors, which can be found in most smartphones,
 drones, head mount displayes, IoT applications and others.
 For example a Nexus 5 smartphone uses InvenSense MPU-
 6515 six-axis, which is a MEMS MotionTracking device and
 includes capacitive gyros and accelerometers. The same IMU
 is used in \cite{Liu-2015} for detecting unsafe driving. 
-
-Magnetic sensors
-can also be used as a referance, in order to minimize the
-gyroscope drift.
 
 In an inertial system, the information from different sensors
 are fused toghether to have the result that is expected. In
@@ -60,12 +57,10 @@ sensors can result in better precision.
 \section{Accelerometer in crowd sensing applications}
 \label{sec:intro-acc-crowd}
 
-To give a more specific implementation, we take into consideration the use of inertial sensors in the context of crowd sensing, because inertial sesors, in particular accelerometers and gyroscops, are present in most of the smartphones and have a large number of applicable use cases.
-
-Our use case takes into consideration the use of smartphones to recognize when a user is using stairs or an elevator. Using data agregated from a large number of smartphones, a map of stairs and elevators can be built, with minimum effort and costs. The beneficiaries for this map could be people with disabilities, that could route their path to a destination according to this information.
+To give a more specific context to corwd sensing, we propose the use of inertial sensors to recognize when a user is using stairs or an elevator. Using data agregated from a large number of smartphones, a map of stairs and elevators can be built, with minimum effort and costs. The beneficiaries for this map could be people with disabilities, that could route their path to a destination according to this information.
 
 For this use case, firstly, an Android application will be built for creating testing and training datasets. The training and testing data will be pre-segmented. If present, magnetic and gravitational sensor will be used to reduce drift and normalize the capture data.
 
 In the second step, a gesture recognition pipeline will be proposed, which will contain algorithms for pre-processing, so that the noise for the captured data is reduced, for gesture recognition, which will identify 4 actions: stairs up, stairs down, elevator up and elevator down and post-processing algorithms.
 
-The last step, will be to test how fast the pipeling learns the actions and compare different algoritms results.
+The last step, will be to test how fast the pipeline learns the actions and compare different algoritms results.
