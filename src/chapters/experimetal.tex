@@ -93,15 +93,51 @@ Another step includes calibration which will be used for normalization of the da
 \begin{itemize}
 \item phone set on screen, which will be associated with +1g
 \item phone set on back, which will be associated with -1g
-\item phone droped, for exeample from one hand to another, which will be associated with 0
+\item phone droped, for exeample from one hand to another, which will be associated with zero value
 \end{itemize}
 
-Readings will be normalized so that diferent devices have similar readings using filters like 
+With the results from the calibration phase, readings will be normalized so that captured data does not vary significantly from one device to another. For this, if we use the "zero value" from above as B, we can substract the measured values like in \ref{eq:center} and obtain Y, which is centered around B. Now, we want to scale this value into a rage that will be common to different devices. For this we use 1G read, as A, and 0 value and obtain \ref{eq:normalisation}
 
-https://www.google.ro/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=android%20accelerometer%20normalize
-http://electronics.stackexchange.com/questions/195796/normalize-values-from-different-mems-3-axis-accelerometers
+\begin{equation}
+Y_{centered} = X - B
+\label{eq:center}
+\end{equation}
+
+\begin{equation}
+Y_{scaled} = \frac{X - B}{A-B}
+\label{eq:normalisation}
+\end{equation}
+
+Training and testing datasets will be pre-segmented using user input on the duration of a gesture or manualy segmented from a continios dataset and all gestures will be associated with a label that represents the type of gesture captured, wheter stairs, elevator or other.
 
 \subsection{Gesture recognition}
+
+\subsubsection{Problem type}
+Having the training and testing datasets it is important to understand the type of problem and types of gestures that the data falls into, so that gesture recognition algotithms are correctly selected. 
+
+As we want as a result a specific value, which indicates the type of gesture a person has made, the usecase falls into the classification problem.
+Further, the movement captured consists in a temporal gesture, which implies movement between two moments of time.
+
+\subsubsection{Pipeline}
+
+Recognising different gestures like walking or going up a stair imply building a gesture recognition pipeline which can support the following components:
+\begin{itemize}
+\item Preprocessing - it is used for noise reduction
+\item Feature extraction - prepares data depending on the necesities of the next components in the pipeline, like input data dimesions reduction
+\item Learning Algorithm - which are trained with data sets so that they can recognize gestures. They are tested using datasets that are different then the ones used for training.
+\item Post processing - optional component used to have a better classification precision.
+\end{itemize}
+
+As there are a lot of frameworks that integrate this components, there is no need to implement it from scrach, so for this purpose we choose to use Gesture Recognition toolkit, described in \cite{Gillian-2014}, which suits the best the studied use case.
+
+\begin{figure}
+	\centering\includegraphics[width=12.5cm]{src/img/GestureRecognitionPipelineImage-01.jpg}
+	\caption{Gesture recognition pipeline}
+	\label{fig:1}
+\end{figure}
+
+\subsubsection{Algorithms}
+
 
 \subsection{Testing}
 
