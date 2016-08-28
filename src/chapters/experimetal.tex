@@ -124,7 +124,7 @@ Recognising different gestures like walking or going up a stair imply building a
 \begin{itemize}
 \item Preprocessing - it is used for noise reduction
 \item Feature extraction - prepares data depending on the necesities of the next components in the pipeline, like input data dimesions reduction
-\item Learning Algorithm - which are trained with data sets so that they can recognize gestures. They are tested using datasets that are different then the ones used for training.
+\item Learning Algorithm - which are trained with data sets so that they can recognize gestures. They are tested using datasets that are different then the ones used for training and can also be easily interated in an Android application using tht Android NDK.
 \item Post processing - optional component used to have a better classification precision.
 \end{itemize}
 
@@ -137,8 +137,24 @@ As there are a lot of frameworks that integrate this components, there is no nee
 \end{figure}
 
 \subsubsection{Algorithms}
+In terms of preprocessing, Gesture Recognition Toolkit offers different filters like low and high pass filter, derivative, dead zone. For our current application low and high-pass filter was used so that the gravitational force was isolated from the accelerometer data. Also, to reduce the noise a double moving average filter was used.
 
+For the learning algorithm, two algorithms are proposed: Hidden Markov Model and Dynamic Time Warping.
+
+Hidden Markov Model algorithm is applicable for temporal pattern recognition, like gesture recognition, which consists in a sequence classifier and has the ability to assign a label or class to each sequence unit. In the training process, the algorithm maps a sequence of observations to a sequence of labels, using weighted finite automata. The algorithm can also use KMeans Quantizer, which is a feature extraction algorithm, to convert the input signal from N dimensions to one dimension.
+
+Dynamic time warping can be used for temporal gesture recognition with an input that has more than one dimension. In the training phase, the algorithm builds a template from the input dataset, taking into consideration the Euclidian distance between gestures of the same label. This distance is also used in the testing phase when the template of a label is compared to an unlabeled gesture.
+
+For post-processing, some of the algorithms present in Gesture Recognition Toolkit are class label filter, for gesture recognition in a continuous data stream, class label change filter or class label timeout filter which stop gestures in the training set or that were already classified to reenter the prediction phase.
 
 \subsection{Testing}
 
+The main metric analysed is the precision of classification and how it depends on the number of training data sets. For this K-Fold Cross Validation is used.
 
+K-Fold Cross Validation separates the input dataset in K smaller sets and uses one of them to created the testing data set and the other subsets form the training data sets. These tests are repeated K times, with the subsets created randomly and also the testing dataset being chosen randomly.
+
+To test the speed of learning, the size of the training dataset is raised incrementally for every tested class. This means that in total there will be K*N tests, where K is the value used for the number of subsets in the K-Fold Cross-validation algorithm and N is the number of incremental tests.
+
+Another test could analyse the execution time for the recognition pipeline, or different components in the pipeline. Also, on mobile devices, metrics like memory consumption or processor load, could be useful.
+
+Although Gesture Recognition Toolkit framework can be integrated into an Android application, and implicitly also the test, for this study the focus is put on the applicability of the use case. The tests will be run on a Linux machine, using real training and testing datasets.
