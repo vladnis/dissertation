@@ -73,7 +73,7 @@ where
 
 We chose \(\alpha\) = 0.85 and \(\beta\) = 1.91 according to a study \cite{zhang2011modeling} that modeled the spatial accessibility to parks.
 
-In the grid with the maximum rating, it is considered that all the people living in that area have access to the park. Further, the percentage of the total population that lives in a zone and has access to the park is calculated relatively to the maximum rating. Figure \ref{fig:access} represents the results for the accessibility rating of the cells that compose the map of Bucharest. A more detailed view is presented in \labelindexref{Table}{table:reports}.
+In the grid with the maximum rating, it is considered that all the people living in that area have access to the park. Further, the percentage of the total population that lives in a zone and has access to the park is calculated relatively to the maximum rating. Figure \ref{fig:access} represents the results for the accessibility rating of the cells that compose the map of Bucharest. A more detailed view is presented in \ref{chap:acc-rating}.
 
 \begin{figure}
     \centering
@@ -81,45 +81,6 @@ In the grid with the maximum rating, it is considered that all the people living
     \caption{Accessibility ratings to park Herastrau}
     \label{fig:access}
 \end{figure}
-
-
-\begin{center}
-\begin{table}[htb]
-  \caption{Detailed results}
-  \begin{tabular}{|c|c|c|c|c|}
-	\hline
-		
-\multicolumn{5}{|c|}{Rating} \\
-\multicolumn{5}{|c|}{Percentage} \\
-\multicolumn{5}{|c|}{Population that has access to the park} \\
-	
-	\hline
-	\hline
-
-   	0.005424 	& 	0.011706	& 	0.016490	&	0.008895	& 	0.004229 \\
-	1.50\%		&	3.23\%		&	4.55\%		&	2.45\%		&	1.17\% \\
-	115		&	120		&	1756		&	143		&	30 \\
-	\hline
-   	0.007620 	& 	0.033826	& 	0.362634	&	0.017346	& 	0.005432 \\
-	2.10\%		&	9.33\%		&	100.00\%	&	4.78\%		&	1.50\% \\
-	485		&	7434		&	117927		&	1306		&	205 \\
-	\hline
-   	0.006283 	& 	0.016937	& 	0.029696	&	0.011566	& 	0.0047259 \\
-	1.73\%		&	4.67\%		&	8.19\%		&	3.19\%		&	1.30\% \\
-	1021		&	4709		&	10318		&	3959		&	529 \\
-	\hline
-   	0.003754 	& 	0.005897	& 	0.006867	&	0.005106	& 	0.003147 \\
-	1.04\%		&	1.63\%		&	1.89\%		&	1.41\%		&	0.87\% \\
-	192		&	1239		&	2382		&	1777		&	972 \\
-	\hline
-   	0.002227 	& 	0.002818	& 	0.003015	&	0.002630	& 	0.002003 \\
-	0.61\%		&	0.78\%		&	0.83\%		&	0.73\%		&	0.55\% \\
-	27		&	22		&	813		&	787		&	40 \\
-	\hline
-  \end{tabular}
-  \label{table:reports}
-\end{table}
-\end{center}
 
 Considering the area of Park Herastrau, the results suggest that the estimated maximum number of possible participants to a crowd sensing study could be around 158,312 people. By taking into account the penetration of smartphones in Romania, of 27.9\% as stated in \cite{poushter2016smartphone}, the number of possible participants is lowered to 44169.
 
@@ -129,3 +90,21 @@ In park Herastrau the scenarios we propose require different numbers of particip
 
 \section{Accelerometers}
 \label{sec:res-acc}
+
+\subsection{Gestures}
+The first part of implementing the use case in which we recognize gestures like walking, climbing stairs or using an elevator, is capturing real datasets with these movement, that will be used next in training the gesture recognition pipeling and also when building datasets.
+
+This part was created using an Android application which enabled the user to record accelerometer data between two point in time. The device used for capturing data is a Nexsus 5, with InvenSense MPU-6515 as an Inertial system. The captured data is associated to one person, walking on different surfaces, using different stairs and elevators.
+
+The important part on this phase was to understand the nature of the gestures. Following, we can see an example of recorded data.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{src/img/Bucharest-Rating.png}
+    \caption{Accessibility ratings to park Herastrau}
+    \label{fig:access}
+\end{figure}
+
+We can se that most of the movement happens vericaly, so we consider only recognising gestures based on this movement. We can see data associated with the five events in the following images.
+
+
