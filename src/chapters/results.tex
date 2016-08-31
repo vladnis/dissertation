@@ -92,19 +92,48 @@ In park Herastrau the scenarios we propose require different numbers of particip
 \label{sec:res-acc}
 
 \subsection{Gestures}
-The first part of implementing the use case in which we recognize gestures like walking, climbing stairs or using an elevator, is capturing real datasets with these movement, that will be used next in training the gesture recognition pipeling and also when building datasets.
+The first part of implementing the use case in which we recognize gestures like walking, climbing stairs or using an elevator, is capturing real datasets with these movement, that will be used next in training the gesture recognition pipele and also when building test datasets.
 
-This part was created using an Android application which enabled the user to record accelerometer data between two point in time. The device used for capturing data is a Nexsus 5, with InvenSense MPU-6515 as an Inertial system. The captured data is associated to one person, walking on different surfaces, using different stairs and elevators.
+This part was created using an Android application which enabled the user to record accelerometer data between two point in time. The device used for capturing data is a Nexsus 5, with InvenSense MPU-6515 as an Inertial system. The captured data is associated to one person, walking on different surfaces, using different stairs and elevators. The sampling rate is considered 2 microseconds.
 
-The important part on this phase was to understand the nature of the gestures. Following, we can see an example of recorded data.
+The important part on this phase was to understand the nature of the gestures. In figure \ref{fig:xyz-stairs-up} an example of recorded data when going up a stair is displayed. We can se that most of the movement happens vertically, so we consider only recognising gestures based on the vertical axis. Other captured data can be seen in \ref{fig:xyz-stairs-down}, for going down a stair, \ref{fig:xyz-walking} for one step in the process of walking.
+
+One problem for this phase is to segment correctly the captured data, so that the training is correct. For this the Android application enables the user to delimit one step in the proccess of moving, but using only user input is not enought, as it is not very precise. This means that additional manual work is needed so that the training data is correctly segmented.
+
+Another problem is the orientation of the phone, when the data is captured. For this the training and testing datasets include different position like in hand or in the pocket.
+
+The results show that taking a step in the process of walking is simillar with a step when climbimg a stair. The difference sits in the initaial part of the step, when the leg getts up, as in stairs this action has a greater amplitude and also has a larger duration. Also, when the leg touches, when on stairs the acceleration is larger on the stairs.
+
+When comparing going up or down a stair way, we can see that the movement are quite opposite and that going up taks more acceleration that going down.
+
+In terms of elevator movement, the accelerations involved have the tendacy to jump from a positive value to a negative one fast.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{src/img/Bucharest-Rating.png}
-    \caption{Accessibility ratings to park Herastrau}
-    \label{fig:access}
+    \includegraphics[width=0.7\textwidth]{src/img/xyz-stairs-up.png}
+    \caption{Accelerometer data for going up a stair}
+    \label{fig:xyz-stairs-up}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{src/img/xyz-stairs-down.png}
+    \caption{Accelerometer data for going down a stair}
+    \label{fig:xyz-stairs-down}
 \end{figure}
 
-We can se that most of the movement happens vericaly, so we consider only recognising gestures based on this movement. We can see data associated with the five events in the following images.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{src/img/xyz-walking.png}
+    \caption{Accelerometer data for walking}
+    \label{fig:xyz-walking}
+\end{figure}
 
 
+\subsection{Recognition performace}
+The porpose of recognising the seven action proposed in the current use case falls to the role of the gesture recognition pipeline.
+
+The pipeline is trained using the datasets obtained in the data aquizition phase from the Android to create the training and testing datasets.
+
+The recognition pipeline for implementing the proposed use case included two version. The first used Hidden Markow Model and the second used Dynamic Time Warping. This algorithms were choosen because of their popularity when dealing with temporal gesture recognition.
+
+The Hidden Markov Model additionaly needs an algorithm for future extraction, which can covert from an N-dimensional input to a one dimennsional input. For this K-Means Quantizer was used.
