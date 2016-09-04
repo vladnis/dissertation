@@ -6,13 +6,13 @@
 \label{sec:related-crowd}
 Crowdsensing is still a young scientific area but it has already gathered a lot of interest and support, as we show below. There are a great number of studies that show the diversity of scenarios in which crowdsensing can be applied.
 
-As stated in \cite{lane2010survey} and \cite{khan2013mobile}, crowdsensing can provide micro and macroscopic analysis of cities, communities and persons. It can be applied in social networking, health, energy, monitoring human behavior and many others.
+As stated in \cite{lane2010survey} and \cite{khan2013mobile}, crowdsensing can provide micro and macroscopic analysis of cities, communities and persons. It can be applied in social networking, health, energy, monitoring human behaviour and many others.
 
 In terms of environmental analysis, the authors of \cite{guo2014participatory} show that by using crowdsensing in urban areas one can collect traffic data or generate noise maps. A similar solution, regarding noise pollution in urban areas is presented in \cite{stevens2010crowdsourcing}. Air quality analysis represents another interesting use for crowdsensing. Authors in \cite{zheng2013u} claim that crowdsensing is the optimal solution for capturing data for large areas, although it is only feasible for \(CO_2\) emissions, because of the complexity and cost of other sensors. \cite{ma2014opportunities} adds road surface monitoring and street parking availability. The former article also presents two categories of sensing: participatory, in which users have to get involved and be active in the measurement and data acquisition process, and opportunistic, where the user has a more limited role in the sensing. In fact, the second sensing approach tends to also be more visible in the literature and existing platforms for crowdsensing, because the user is relieved of much of the burdens associated with taking decisions where and how to collect measurement data. Our work focuses on the second approach, opportunistic sensing.
 
 Without the use of crowdsensing the cost of implementing a similarly capable sensor system would be significantly higher. In \cite{mao2012citysee} the authors show that to cover an area of approximatively $1km^2$, 100 sensors and 1096 relays need to be used. This method cannot scale for larger area of studies, so crowd sensing is a better alternative.
 
-As described in \cite{ra2012medusa}, crowd sensing generally implies a requester, a campaign starter, which requires users willing to capture sensor data that is used directly or at a later time for various experiments. The authors acknowledge that in terms of user engagement, it is sometimes difficult to convince users to participate in a crowdsensing analysis. Incentives are proposed as a solution to this problem. They take the form of payments or gamification. Incentives are also used in \cite{talasila2014crowdsensing}. The authors use micro-payments and gamification to attract enough users so that they can cover the area of a university campus. The scope was to measure WiFi signal strength across the entire campus. However, the authors make no analysis on what is the optimal number of participants to a crowd sensing campaign or how to manage incentives to reach that value. The use of payments for crowd sensing participation without a previous analysis of possible number of participants could lead to high costs and little control over the results.
+As described in \cite{ra2012medusa}, crowd sensing generally implies a requester, a campaign starter, which requires users willing to capture sensor data that is used directly or at a later time for various experiments. The authors acknowledge that in terms of user engagement, it is sometimes difficult to convince users to participate in a crowdsensing analysis. Incentives are proposed as a solution to this problem. They take the form of payments or gamification. Incentives are also used in \cite{talasila2014crowdsensing}. The authors use micro-payments and gamification to attract enough users so that they can cover the area of a university campus. The scope was to measure WiFi signal strength across the entire campus. However, the authors make no analysis on what is the optimal number of participants to a crowd sensing campaign or how to manage incentives to reach that value. The use of payments for crowd sensing participation without a previous analysis of a possible number of participants could lead to high costs and little control over the results.
 
 \textbf{Access to a space of interest}.
 It is not enough to determine the optimal number of participants for a crowd sensing campaign. One also needs to take into account the plausibility of achieving this number. Probably one of the factors that is most relevant is the accessibility of individuals to the area of interest. In the literature there are different approaches to determine the number of people that have access to an area, such as a park, some of which are presented below.
@@ -25,7 +25,31 @@ The authors of \cite{talen1998assessing} use the container approach to determine
 
 The attractiveness of a park can be modeled by using as little as only the size of a park. The assumption is that larger parks have more facilities and respectively are more attractive. In \cite{zhang2011modeling} the authors propose the population-weighted distance, which should be a more precise method of determining the accessibility to a park. This is the method we chose for our analysis and discussion.
 
-\section{Accelerometers}
+\section{Inertial sensors}
 \label{sec:related-acc}
 
-\textbf{Gesture recognition}.
+Data captured from inertial sensors can be at the basis of many use cases. In consequence, there are many applications and papers that study different integrations of this type of sensors.
+
+One of the most popular areas of applicability for inertial sensors is in the inertial navigation, which is useful in an indoor environment, where GPS signal cannot be used to map the user to a location. \cite{Wang-2012} uses the accelerometer and Wi-fi data from a smartphone to capture signatures of the different locations which are associated with indoor positioning.
+
+One method that includes analysing only data from the inertial sensor is  pedestrian dead reckoning. This method is implemented in \cite{Collin-2003}, which uses high precision ring gyroscopes and accelerometers for indoor positioning. Also, \cite{Huang-2014} implements pedestrian dead reckoning, using inertial sensors that can be found in smartphones and displays the importance of calibration.
+
+These articles show that using inertial sensors, like accelerometers and gyroscopes, for indoor positioning, can be much easier than implementing an expensive network of Wi-Fi signal or other complex systems.
+
+
+A use case as important as indoor positioning is gesture and activity recognition using inertial data. Article \cite{Kwapisz-2011} proposes an implementation in which the smartphone react to the context it is in, whether the user is walking, jogging, climbing stairs.
+
+Another area of study where the inertial sensor was used is in the medical domain, which can take advantage of gesture and activity recognition. Paper \cite{Bourke-2008} uses a wearable inertial sensor to detect falls from normal activity of daily living, that could injure older people and also propose the use of airbags technology to reduce the severity of the fall. Another interesting article is \cite{Raya-2010}, which proposes a method to help people with disabilities to use head movement to interact with a computer.
+
+Related to the medical field, is also the monitoring and analysis of sports activities. In \cite{King-2010} accelerometers are used to measure the dynamics of using a golf club which can be helpful for training purposes. Accelerometers can be also used to create statistics about an activity. For example \cite{Troiano-2008} offers data on the subject of physical activity in the United States.
+
+ \cite{Avci-2010} resumes applications in sports, health care and wellbeing, that can be implemented through the use of inertial sensors and gesture recognition.
+
+Other domanis include security and autentication, presented in \cite{Patel-2004} , stability control, more specificaly in automotive \cite{Jeong-2011}, robots \cite{Li-2015} or other transportation \cite{Huang-2010}. Also interesting applications can be found in virtual reality
+\cite{Young-2011} and augmented reality \cite{You-2001}.   
+
+Even though crowd sensing is quite a new method for acquiring and aggregating data, there are different papers that take into consideration the benefits of combining inertial systems with crowd sensing.
+
+One of them is \cite{Aly-2014}, in which inertial sensors available on smartphones are used so that map-based services like Google Maps can additionally benefit from different road semantics like bridges, crossroads, roundabouts, underpasses.
+
+In \cite{Roggen-2011} crowd sensing and inertial data is used for behaviour prediction in the crowd, in a case of emergency.
